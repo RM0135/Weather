@@ -1,0 +1,10 @@
+2024-11-23 16:04:34,703 - INFO - Testing API for city: London
+2024-11-23 16:04:35,251 - INFO - Saved response to weather_data_London_20241123_160435.json
+2024-11-23 16:04:35,252 - INFO - Testing API for city: Paris
+2024-11-23 16:04:35,472 - INFO - Saved response to weather_data_Paris_20241123_160435.json
+2024-11-23 16:04:35,473 - INFO - Testing API for city: Madrid
+2024-11-23 16:04:35,690 - INFO - Saved response to weather_data_Madrid_20241123_160435.json
+2024-11-23 16:04:35,691 - INFO - Testing API for city: Tokyo
+2024-11-23 16:04:35,891 - INFO - Saved response to weather_data_Tokyo_20241123_160435.json
+2024-11-23 16:04:35,892 - INFO - Testing API for city: NonExistentCity
+2024-11-23 16:04:36,171 - ERROR - Connection error: 404 Client Error: Not Found for url: https://api.openweathermap.org/data/2.5/weather?q=NonExistentCity&appid=934bdc5186c2f332efd28b8369302ebd&units=metric
