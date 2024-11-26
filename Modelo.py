@@ -1,11 +1,15 @@
-import request  # Corregido: 'requests' en lugar de 'request'
+import requests
 from typing import Dict, Optional
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+
+# Cargar variables de entorno
+load_dotenv()
 
 class WeatherModel:
     def __init__(self, api_key: str = None):
-        self.api_key = api_key or "f38764e044a765033d892147a04d5e28"
+        self.api_key = api_key or os.getenv('API_KEY')
         self.base_url = "https://api.openweathermap.org/data/2.5/weather"
         
     def get_weather(self, city: str, units: str = "metric") -> Optional[Dict]:
@@ -26,7 +30,7 @@ class WeatherModel:
                 "units": units
             }
             
-            response = request.get(self.base_url, params=params)
+            response = requests.get(self.base_url, params=params)
             response.raise_for_status()  # Lanza una excepción para códigos de error HTTP
             
             data = response.json()
@@ -40,22 +44,22 @@ class WeatherModel:
                 "fecha_consulta": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
             
-        except request.exceptions.RequestException as e:
-            print(f"Error en la solicitud HTTP: {e}")
-            return None
-        except KeyError as e:
-            print(f"Error al procesar los datos: {e}")
-            return None
-        except Exception as e:
-            print(f"Error inesperado: {e}")
-            return None
+        except requests.exceptions.HTTPError as http_err:
+            print(f"HTTP error occurred: {http_err}")
+        except requests.exceptions.RequestException as req_err:
+            print(f"Request error occurred: {req_err}")
+        except KeyError as key_err:
+            print(f"Key error: {key_err}")
+        except Exception as err:
+            print(f"An unexpected error occurred: {err}")
+        return None
 
 # Ejemplo de uso
 if __name__ == "__main__":
     weather_model = WeatherModel()
     
     # Obtener el clima para diferentes ciudades
-    cities = ["London", "Madrid", "Paris"]
+    cities = ["London", "Madrid", "Paris", "NonExistentCity"]
     
     for city in cities:
         weather_data = weather_model.get_weather(city)
